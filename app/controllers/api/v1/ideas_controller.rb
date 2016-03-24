@@ -17,6 +17,15 @@ class Api::V1::IdeasController < ApplicationController
       render json: { errors: idea.errors }, status: 422, location: api_v1_ideas_path
     end
   end
+  
+  def update
+    idea = Idea.find(params[:id])
+    if idea.update(idea_params)
+      respond_with(idea, status: 200, location: api_v1_idea_path(idea))
+    else
+      render json: idea.errors, status: 422
+    end
+  end
 
   private
 
